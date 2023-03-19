@@ -1,7 +1,53 @@
+var today = dayjs();
+$('#currentDay').text(today.format('dddd, MMM D, YYYY'));
+
+var rootDiv = $('#root-div');
+
+var hours = [
+  '9AM',
+  '10AM',
+  '11AM',
+  '12PM',
+  '1PM',
+  '2PM',
+  '3PM',
+  '4PM',
+  '5PM',
+];
+
+for (var i = 0; i < hours.length; i++) {
+  var outerDiv = $('<div>');
+  outerDiv.addClass('row time-block past');
+  rootDiv.append(outerDiv);
+
+  var hoursEl = $('<div>');
+  hoursEl.text(hours[i]);
+  hoursEl.addClass('col-2 col-md-1 hour text-center py-3');
+  outerDiv.append(hoursEl);
+
+var textArea = $('<textarea>');
+textArea.addClass('col-8 col-md-10 description');
+textArea.attr('rows', '3');
+outerDiv.append(textArea);
+
+var addButton = $('<button>');
+addButton.addClass('btn saveBtn col-2 col-md-1');
+outerDiv.append(addButton);
+
+var btnIcon = $('<i>');
+btnIcon.addClass('fas fa-save');
+addButton.append(btnIcon);
+
+}
+
+
+
+
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
+
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
     // local storage. HINT: What does `this` reference in the click listener
