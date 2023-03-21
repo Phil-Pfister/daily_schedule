@@ -1,27 +1,52 @@
-var today = dayjs();
+
+
+
+
+
+
+// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
+// the code isn't run until the browser has finished rendering all the elements
+// in the html.
+$(function () {
+  var today = dayjs();
 $('#currentDay').text(today.format('dddd, MMM D, YYYY'));
 
 var rootDiv = $('#root-div');
 
-var hours = [
-  '9AM',
-  '10AM',
-  '11AM',
-  '12PM',
-  '1PM',
-  '2PM',
-  '3PM',
-  '4PM',
-  '5PM',
-];
+// var hours = [
+//   '9AM',
+//   '10AM',
+//   '11AM',
+//   '12PM',
+//   '1PM',
+//   '2PM',
+//   '3PM',
+//   '4PM',
+//   '5PM',
+// ];
 
+var hours = [
+  dayjs().hour(7),
+  dayjs().hour(8),
+  dayjs().hour(9),
+  dayjs().hour(10),
+  dayjs().hour(11),
+  dayjs().hour(12),
+  dayjs().hour(13),
+  dayjs().hour(14),
+  dayjs().hour(15),
+  dayjs().hour(16),
+  dayjs().hour(17)
+]
 for (var i = 0; i < hours.length; i++) {
   var outerDiv = $('<div>');
-  outerDiv.addClass('row time-block past');
+  outerDiv.addClass('row time-block');
   rootDiv.append(outerDiv);
+  outerDiv.attr("id", 'hour-' + hours[i]);
 
   var hoursEl = $('<div>');
-  hoursEl.text(hours[i]);
+  var hourAlt = dayjs()
+  hoursEl.text(hours[i].format('h a'));
   hoursEl.addClass('col-2 col-md-1 hour text-center py-3');
   outerDiv.append(hoursEl);
 
@@ -38,15 +63,17 @@ var btnIcon = $('<i>');
 btnIcon.addClass('fas fa-save');
 addButton.append(btnIcon);
 
+if (dayjs().isBefore(dayjs(hours[i]))) {
+  outerDiv.addClass('future');
 }
+if (dayjs().isAfter(dayjs(hours[i]))) {
+  outerDiv.addClass('past');
 
-
-
-
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
+}
+if (dayjs().isSame(dayjs(hours[i], 'hh a'))) {
+  outerDiv.addClass('present');
+};
+}
 
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
