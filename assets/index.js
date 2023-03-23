@@ -1,9 +1,6 @@
 
 
 
-
-
-
 // Wrap all code that interacts with the DOM in a call to jQuery to ensure that
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
@@ -12,6 +9,13 @@ $(function () {
 $('#currentDay').text(today.format('dddd, MMM D, YYYY'));
 
 var rootDiv = $('#root-div');
+var outerDiv = $('<div>');
+var hoursEl = $('<div>');
+var textArea = $('<textarea>');
+var addButton = $('<button>');
+var btnIcon = $('<i>');
+var outerDivId;
+
 
 // var hours = [
 //   '9AM',
@@ -36,44 +40,59 @@ var hours = [
   dayjs().hour(14),
   dayjs().hour(15),
   dayjs().hour(16),
-  dayjs().hour(17)
+  dayjs().hour(17),
+  dayjs().hour(18),
+  dayjs().hour(19),
+  dayjs().hour(20),
 ]
 for (var i = 0; i < hours.length; i++) {
-  var outerDiv = $('<div>');
+var outerDiv = $('<div>');
+var hoursEl = $('<div>');
+var textArea = $('<textarea>');
+var addButton = $('<button>');
+var btnIcon = $('<i>');
+  
   outerDiv.addClass('row time-block');
   rootDiv.append(outerDiv);
-  outerDiv.attr("id", 'hour-' + hours[i]);
+  outerDiv.attr("id", 'hour-' + hours[i].format('ha'));
+  
 
-  var hoursEl = $('<div>');
-  var hourAlt = dayjs()
+  
   hoursEl.text(hours[i].format('h a'));
   hoursEl.addClass('col-2 col-md-1 hour text-center py-3');
   outerDiv.append(hoursEl);
 
-var textArea = $('<textarea>');
+
 textArea.addClass('col-8 col-md-10 description');
 textArea.attr('rows', '3');
 outerDiv.append(textArea);
 
-var addButton = $('<button>');
+
 addButton.addClass('btn saveBtn col-2 col-md-1');
 outerDiv.append(addButton);
 
-var btnIcon = $('<i>');
+
 btnIcon.addClass('fas fa-save');
 addButton.append(btnIcon);
-
-if (dayjs().isBefore(dayjs(hours[i]))) {
+var now = dayjs().hour();
+if (now < hours[i].hour()) {
   outerDiv.addClass('future');
 }
-if (dayjs().isAfter(dayjs(hours[i]))) {
+else if (now === hours[i].hour()) {
+  outerDiv.addClass('present');
+ 
+}
+else {
   outerDiv.addClass('past');
 
-}
-if (dayjs().isSame(dayjs(hours[i], 'hh a'))) {
-  outerDiv.addClass('present');
 };
+console.log(outerDiv);
+
 }
+
+
+
+
 
     // TODO: Add a listener for click events on the save button. This code should
     // use the id in the containing time-block as a key to save the user input in
