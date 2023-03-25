@@ -4,9 +4,6 @@ $(function () {
   //creates Date header that updates to the current date
 $('#currentDay').text(today.format('dddd, MMM D, YYYY'));
 
-if (dayjs("mm") === 00 && dayjs("ss") === 00) {
-  window.location.reload();
-}
 
 var rootDiv = $('#root-div');
 
